@@ -19,4 +19,9 @@ class Order extends \Bigcommerce\Api\Resources\Order
             return $this->date_created;
         }
     }
+
+    public function getCostIncludingTax(int $decimalPlaces = 2)
+    {
+        return number_format($this->total_inc_tax, $decimalPlaces) . ' ' . $this->currency_code;
+    }
 }
