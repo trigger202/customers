@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\services\CustomerService;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 
 class CustomerDetailsController extends BaseController
 {
@@ -15,12 +16,17 @@ class CustomerDetailsController extends BaseController
         $this->customerService = $customerService;
     }
 
+    /**
+     *  int $id
+     * @inheritDoc
+     *
+     */
     public function show($id)
     {
         $customer = $this->customerService->getCustomerDetails($id);
         if ($customer === false) {
+            Log::error("Failed to retrieve customerId $id");
             abort(404);
-            return view('404');
         }
 
         return view('details', [
