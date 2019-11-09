@@ -22,7 +22,7 @@
                 <tr>
                     <td colspan="2">{{ $order->getCreatedDate() }}</td>
                     <td colspan="2">{{ $order->items_total }}</td>
-                    <td colspan="2"> ${{  number_format($order->total_inc_tax, 2) }}</td>
+                    <td colspan="2"> {{  number_format($order->total_inc_tax, 2) }} {{$order->currency_code}}</td>
                 </tr>
             @endforeach
         @endif
