@@ -23,7 +23,7 @@ class CustomerDetailsController extends BaseController
      */
     public function show($id)
     {
-        $customer = $this->customerService->getCustomerDetails($id);
+        $customer = $this->customerService->getCustomerOrderDetails($id);
         if ($customer === false) {
             Log::error("Failed to retrieve customerId $id");
             abort(404);

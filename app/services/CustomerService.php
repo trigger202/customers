@@ -47,7 +47,7 @@ class CustomerService
      * @param int $id
      * @return Customer
      */
-    public function getCustomerDetails(int $id)
+    public function getCustomerOrderDetails(int $id)
     {
         $customer = $this->bigCommerceClient::getCustomer($id);
         if ($customer === false) {

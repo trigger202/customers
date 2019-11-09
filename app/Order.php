@@ -15,7 +15,7 @@ class Order extends \Bigcommerce\Api\Resources\Order
             return $date->format($dateFormat);
 
         } catch (\Exception $e) {
-            Log::info(sprintf("Failed to parse date %s", $this->date_created), ['exception' => $e]);
+            Log::error(sprintf("Failed to parse date %s", $this->date_created), ['exception' => $e]);
             return $this->date_created;
         }
     }
