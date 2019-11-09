@@ -14,10 +14,10 @@
         <tbody>
         @foreach($customers as $customer)
             <tr>
-                <td>{{ $customer->getId() }} </td>
+                <td>{{ $customer->id }} </td>
                 <td>{{ $customer->getFullName() }} </td>
                 <td>{{ count($customer->getOrders()) }} </td>
-                <td><a href='{{ route('CustomerDetails.show', $customer->getId()) }}'>View</a></td>
+                <td><a href='{{ route('CustomerDetails.show', $customer->id) }}'>View</a></td>
             </tr>
         @endforeach
         </tbody>

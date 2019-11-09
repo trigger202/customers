@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 class CustomerDetailsController extends BaseController
 {
-    /**@var CustomerService $httpClient */
+    /**@var CustomerService */
     private $customerService;
 
     public function __construct(CustomerService $customerService)
@@ -17,7 +17,12 @@ class CustomerDetailsController extends BaseController
 
     public function show($id)
     {
-        $customer = $this->customerService->getCustomer($id);
+        $customer = $this->customerService->getCustomerDetails($id);
+        if ($customer === false) {
+            abort(404);
+            return view('404');
+        }
+
         return view('details', [
             'customer' => $customer,
             'lifeTimeValue' => $customer->getLifeTimeValue(),

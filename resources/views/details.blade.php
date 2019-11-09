@@ -1,12 +1,9 @@
 @extends('layouts.app')
 
-@section('title', $customer->getFirstName() . "'s Order History")
+@section('title', $customer->first_name . "'s Order History")
 
 @section('content')
-    @if( count($customer->getOrders()) < 1)
-        <p>No order history yet</p>
-    @endif
-    <table>
+    <table class="table ">
         <thead>
         <tr>
             <th>Date</th>
@@ -15,10 +12,24 @@
         </tr>
         </thead>
         <tbody>
-        {{-- Details go here --}}
+        @if( count($customer->getOrders()) < 1)
+            <tr>
+                <td colspan="2">No order history yet <br><br><br></td>
+            </tr>
+        @else
+            {{-- Details go here --}}
+            @foreach($customer->getOrders() as $order)
+                <tr>
+                    <td colspan="2">{{ $order->getCreatedDate() }}</td>
+                    <td colspan="2">{{ $order->items_total }}</td>
+                    <td colspan="2">{{ $order->total_inc_tax }}</td>
+                </tr>
+            @endforeach
+        @endif
+
         <tr>
             <td colspan="2">Lifetime Value</td>
-            <td>${{ $lifeTimeValue }}</td>
+            <td>${{ $lifeTimeValue}}</td>
         </tr>
         </tbody>
     </table>

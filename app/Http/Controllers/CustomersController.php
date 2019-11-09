@@ -9,7 +9,7 @@ class CustomersController extends BaseController
 {
     public function index(CustomerService $customerService)
     {
-        $customers = $customerService->getCustomersWithOrderCount();
+        $customers = $customerService->getCustomersWithOrders();
 //        dd($customers);
         return view('customers')->with(['customers' => $customers]);
     }

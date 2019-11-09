@@ -2,91 +2,32 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Customer extends Model
+class Customer extends \Bigcommerce\Api\Resources\Customer
 {
-    /** @var int */
-    private $id;
-    /** @var string */
-    private $first_name;
-    /** @var string */
-    private $last_name;
-    /**@var array */
     private $orders = [];
 
-    /**
-     * @param mixed $first_name
-     * @return Customer
-     */
-    public function setFirstName($first_name)
-    {
-        $this->first_name = $first_name;
-
-        return $this;
-    }
-
-    /**
-     * @param string $last_name
-     * @return Customer
-     */
-    public function setLastName($last_name)
-    {
-        $this->last_name = $last_name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getFullName()
     {
         return $this->first_name . ' ' . $this->last_name;
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
+     * @param \Bigcommerce\Api\Resources\Order[]|null $orders
      * @return Customer
      */
-    public function setId(int $id)
+    public function setOrders($orders)
     {
-        $this->id = $id;
+        if (is_null($orders)) {
+            $orders = [];
+        }
 
-        return $this;
-    }
+        $data = [];
+        foreach ($orders as $order) {
+            $newOrder = new Order($order);
+            $data[] = $newOrder;
+        }
 
-    /**
-     * @return string
-     */
-    public function getFirstName(): string
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName(): string
-    {
-        return $this->last_name;
-    }
-
-    /**
-     * @param array|null $orders
-     * @return Customer
-     */
-    public function setOrders($orders): Customer
-    {
-        $this->orders = $orders ?: [];
+        $this->orders = $data;
 
         return $this;
     }
@@ -105,11 +46,11 @@ class Customer extends Model
 
     public function getLifeTimeValue()
     {
-
         $sum = 0;
         foreach ($this->getOrders() as $order) {
             $sum += $order->total_inc_tax;
         }
+
         return $sum;
     }
 }
