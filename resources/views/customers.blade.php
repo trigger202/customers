@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ $customer->getId() }} </td>
                 <td>{{ $customer->getFullName() }} </td>
-                <td>{{ $customer->getTotalOrders() }} </td>
+                <td>{{ count($customer->getOrders()) }} </td>
                 <td><a href='{{ route('CustomerDetails.show', $customer->getId()) }}'>View</a></td>
             </tr>
         @endforeach

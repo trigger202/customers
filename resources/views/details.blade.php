@@ -3,6 +3,9 @@
 @section('title', $customer->getFirstName() . "'s Order History")
 
 @section('content')
+    @if( count($customer->getOrders()) < 1)
+        <p>No order history yet</p>
+    @endif
     <table>
         <thead>
         <tr>

@@ -32,12 +32,7 @@ class CustomerService
             $customerEntity->setId($customer->id);
             $customerEntity->setFirstName($customer->first_name);
             $customerEntity->setLastName($customer->last_name);
-            $ordersCount = 0;
-
-            if ($orders != false) {
-                $ordersCount = count($orders);
-            }
-            $customerEntity->setTotalOrders($ordersCount);
+            $customerEntity->setOrders($orders);
 
             array_push($allCustomers, $customerEntity);
         }
@@ -51,15 +46,10 @@ class CustomerService
 
         $customerEntity = new Customer();
         $customerEntity->setId($customer->id);
-        $customerEntity->setLastName($customerEntity->setOrders($orders));
+        $customerEntity->setFirstName($customer->first_name);
+        $customerEntity->setLastName($customer->last_name);
+        $customerEntity->setOrders($orders);
 
-        $ordersCount = 0;
-
-        if ($orders != false) {
-            $ordersCount = count($orders);
-        }
-
-        $customerEntity->setTotalOrders($ordersCount);
-
+        return $customerEntity;
     }
 }

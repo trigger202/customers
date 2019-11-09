@@ -12,9 +12,7 @@ class Customer extends Model
     private $first_name;
     /** @var string */
     private $last_name;
-    /** @var int */
-    private $total_orders;
-
+    /**@var array */
     private $orders = [];
 
     /**
@@ -24,6 +22,7 @@ class Customer extends Model
     public function setFirstName($first_name)
     {
         $this->first_name = $first_name;
+
         return $this;
     }
 
@@ -34,6 +33,7 @@ class Customer extends Model
     public function setLastName($last_name)
     {
         $this->last_name = $last_name;
+
         return $this;
     }
 
@@ -48,24 +48,6 @@ class Customer extends Model
     /**
      * @return int
      */
-    public function getTotalOrders(): int
-    {
-        return $this->total_orders;
-    }
-
-    /**
-     * @param $total_orders
-     */
-    public function setTotalOrders(\Bigcommerce\Api\Resources\Order $orders): void
-    {
-        if (is_array($orders)) {
-            $this->total_orders = $total_orders;
-        }
-    }
-
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
@@ -73,10 +55,13 @@ class Customer extends Model
 
     /**
      * @param int $id
+     * @return Customer
      */
-    public function setId(int $id): void
+    public function setId(int $id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -96,12 +81,12 @@ class Customer extends Model
     }
 
     /**
-     * @param array $orders
+     * @param array|null $orders
      * @return Customer
      */
-    public function setOrders(array $orders): Customer
+    public function setOrders($orders): Customer
     {
-        $this->orders = $orders;
+        $this->orders = $orders ?: [];
 
         return $this;
     }
@@ -112,5 +97,19 @@ class Customer extends Model
     public function getOrders(): array
     {
         return $this->orders;
+    }
+
+    /** The total value of all of their orders
+     * @return int
+     */
+
+    public function getLifeTimeValue()
+    {
+
+        $sum = 0;
+        foreach ($this->getOrders() as $order) {
+            $sum += $order->total_inc_tax;
+        }
+        return $sum;
     }
 }

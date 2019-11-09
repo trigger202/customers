@@ -18,10 +18,9 @@ class CustomerDetailsController extends BaseController
     public function show($id)
     {
         $customer = $this->customerService->getCustomer($id);
-
         return view('details', [
-            'customer' => null,
-            'lifeTimeValue' => 100,
+            'customer' => $customer,
+            'lifeTimeValue' => $customer->getLifeTimeValue(),
         ]);
     }
 }
